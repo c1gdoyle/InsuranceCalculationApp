@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InsuranceCalculationApp", "Demo.InsuranceCalculationApp\Demo.InsuranceCalculationApp.csproj", "{A80DF72A-7FB8-4459-85BE-0AC37B7BB092}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Presentation", "Demo.Presentation\Demo.Presentation.csproj", "{0AE22329-D43A-44D4-BE22-DF3C02A47019}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A80DF72A-7FB8-4459-85BE-0AC37B7BB092}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A80DF72A-7FB8-4459-85BE-0AC37B7BB092}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A80DF72A-7FB8-4459-85BE-0AC37B7BB092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AE22329-D43A-44D4-BE22-DF3C02A47019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AE22329-D43A-44D4-BE22-DF3C02A47019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AE22329-D43A-44D4-BE22-DF3C02A47019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AE22329-D43A-44D4-BE22-DF3C02A47019}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
