@@ -43,6 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Claim.cs" />
+    <Compile Include="Data\Driver.cs" />
+    <Compile Include="Data\InsurancePolicy.cs" />
+    <Compile Include="Data\Occupation.cs" />
+    <Compile Include="PremiumCalculation\DriverAgePremiumCalculationRule.cs" />
+    <Compile Include="PremiumCalculation\DriverClaimsPremiumCalculationRule.cs" />
+    <Compile Include="PremiumCalculation\DriverOccupationPremiumCalculationRule.cs" />
+    <Compile Include="PremiumCalculation\IPremiumCalculationRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
