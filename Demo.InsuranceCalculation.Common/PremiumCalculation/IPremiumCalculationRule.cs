@@ -9,6 +9,12 @@ namespace Demo.InsuranceCalculation.PremiumCalculation
     public interface IPremiumCalculationRule
     {
         /// <summary>
+        /// Gets the order in which this rule is to be applied
+        /// when calculating the insurance premium.
+        /// </summary>
+        int OrderOfPrecedence { get; }
+
+        /// <summary>
         /// Calculates the cost of an insurance premium for a given insurance policy.
         /// </summary>
         /// <param name="policy">The insurance policy.</param>

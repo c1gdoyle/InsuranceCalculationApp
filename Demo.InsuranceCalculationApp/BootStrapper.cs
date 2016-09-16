@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using Prism.Unity;
+using Microsoft.Practices.Unity;
 
 namespace Demo.InsuranceCalculationApp
 {
@@ -16,7 +12,7 @@ namespace Demo.InsuranceCalculationApp
         #region UnityBootstrapper Overrides
         protected override DependencyObject CreateShell()
         {
-            return Container.TryResolve<InsuranceCalculationAppShell>();
+            return Container.Resolve<InsuranceCalculationAppShell>();
         }
 
         protected override void InitializeModules()
@@ -32,6 +28,5 @@ namespace Demo.InsuranceCalculationApp
             ModuleCatalog.AddModule(null);
         }
         #endregion UnityBootstrapper Overrides
-
     }
 }

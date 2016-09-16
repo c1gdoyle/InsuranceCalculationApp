@@ -8,8 +8,6 @@ namespace Demo.InsuranceCalculation.Data
     /// </summary>
     public class Driver
     {
-        private IList<Claim> _claims = new List<Claim>();
-
         /// <summary>
         /// Gets or sets the name of this driver.
         /// </summary>
@@ -38,11 +36,12 @@ namespace Demo.InsuranceCalculation.Data
         }
 
         /// <summary>
-        /// Gets the claims associated with this driver, if any.
+        /// Gets or sets the claims associated with this driver, if any.
         /// </summary>
         public IList<Claim> Claims
         {
-            get { return _claims; }
+            get;
+            set;
         }
     }
 }
