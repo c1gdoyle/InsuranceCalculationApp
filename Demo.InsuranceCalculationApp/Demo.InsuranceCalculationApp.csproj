@@ -131,6 +131,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Demo.InsuranceCalculation.Common\Demo.InsuranceCalculation.csproj">
+      <Project>{a6e49cdf-2314-45f9-b55d-4b8a80fa3ed1}</Project>
+      <Name>Demo.InsuranceCalculation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Demo.Presentation\Demo.Presentation.csproj">
       <Project>{0ae22329-d43a-44d4-be22-df3c02a47019}</Project>
       <Name>Demo.Presentation</Name>

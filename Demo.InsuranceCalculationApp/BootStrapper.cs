@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using Prism.Unity;
 using Microsoft.Practices.Unity;
+using Demo.InsuranceCalculation;
+using Prism.Modularity;
 
 namespace Demo.InsuranceCalculationApp
 {
@@ -25,7 +27,8 @@ namespace Demo.InsuranceCalculationApp
         protected override void ConfigureModuleCatalog()
         {
             base.ConfigureModuleCatalog();
-            ModuleCatalog.AddModule(null);
+            ModuleCatalog moduleCatalog = (ModuleCatalog)ModuleCatalog;
+            moduleCatalog.AddModule(typeof(InsuranceCalculationModule));
         }
         #endregion UnityBootstrapper Overrides
     }
