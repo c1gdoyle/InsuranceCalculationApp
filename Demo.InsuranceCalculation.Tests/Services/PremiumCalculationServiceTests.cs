@@ -12,12 +12,13 @@ namespace Demo.InsuranceCalculation.Tests.Services
     public class PremiumCalculationServiceTests
     {
         private const decimal StartingPremium = 500.0m;
+        private readonly DateTime PolicyStartDate = DateTime.Today.AddDays(1);
 
         [TestMethod]
         public void PremiumIsIncreasedByTenPercentIfThereIsADriverWhoIsAnAccountant()
         {
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+                PolicyStartDate,
                 new List<Driver>
                 {
                     new Driver { Name = "Joe", Occupation = Occupation.Chauffeur }
@@ -32,7 +33,7 @@ namespace Demo.InsuranceCalculation.Tests.Services
         public void PremiumIsDecreasedByTenPercentIfThereIsADriverWhoIsAnAccountant()
         {
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+                PolicyStartDate,
                 new List<Driver>
                 {
                     new Driver { Name = "Joe", Occupation = Occupation.Accountant }
@@ -48,11 +49,11 @@ namespace Demo.InsuranceCalculation.Tests.Services
         public void PremiumIsIncreasedByTwentyPercentIfYoungestDriverIsAgedBetween21And25()
         {
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+                PolicyStartDate,
                 new List<Driver>
                 {
-                    new Driver { Name = "Joe", Occupation = Occupation.Chauffeur,  DateOfBirth = new DateTime(1995, 9, 16) },
-                    new Driver { Name = "John", Occupation = Occupation.Chauffeur,  DateOfBirth = new DateTime(1990, 9, 16)}
+                    new Driver { Name = "Joe", Occupation = Occupation.Chauffeur,  DateOfBirth = PolicyStartDate.AddYears(-21) },
+                    new Driver { Name = "John", Occupation = Occupation.Chauffeur,  DateOfBirth = PolicyStartDate.AddYears(-26)}
                 });
 
             decimal finalPremium = new DriverAgePremiumCalculationRule().CalculatePremium(policy, StartingPremium);
@@ -65,11 +66,11 @@ namespace Demo.InsuranceCalculation.Tests.Services
         public void PremiumIsDecreasedByTenPercentIfYoungestDriverIsAgedBetween26And75()
         {
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+               PolicyStartDate,
                 new List<Driver>
                 {
-                    new Driver { Name = "John", Occupation = Occupation.Chauffeur,  DateOfBirth = new DateTime(1990, 9, 16)},
-                    new Driver { Name = "James", Occupation = Occupation.Chauffeur,  DateOfBirth = new DateTime(1985, 9, 16)}
+                    new Driver { Name = "John", Occupation = Occupation.Chauffeur,  DateOfBirth = PolicyStartDate.AddYears(-26)},
+                    new Driver { Name = "James", Occupation = Occupation.Chauffeur,  DateOfBirth = PolicyStartDate.AddYears(-30)}
                 });
 
             decimal finalPremium = new DriverAgePremiumCalculationRule().CalculatePremium(policy, StartingPremium);
@@ -82,15 +83,15 @@ namespace Demo.InsuranceCalculation.Tests.Services
         public void PremimumIsIncreasedByTwentyPercentForEachClaimWithinOneYearOfStartOfPolicy()
         {
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+                PolicyStartDate,
                 new List<Driver>
                 {
                     new Driver
                     {
                         Name = "John",
                         Occupation = Occupation.Chauffeur,
-                        DateOfBirth = new DateTime(1990, 9, 16),
-                        Claims = new List<Claim> { new Claim { DateOfClaim = new DateTime(2016, 1, 16) }, new Claim { DateOfClaim = new DateTime(2015, 10, 16) } }
+                        DateOfBirth = PolicyStartDate.AddYears(-26),
+                        Claims = new List<Claim> { new Claim { DateOfClaim = PolicyStartDate.AddMonths(-8) }, new Claim { DateOfClaim = PolicyStartDate.AddMonths(-11) } }
                     },                    
                 });
 
@@ -104,15 +105,15 @@ namespace Demo.InsuranceCalculation.Tests.Services
         public void PremiumIsIncreasedByTenPercentForEachClaimsWithinTwoToFiveYearsOfStartOfPolicy()
         {
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+                PolicyStartDate,
                 new List<Driver>
                 {
                     new Driver
                     {
                         Name = "John",
                         Occupation = Occupation.Chauffeur,
-                        DateOfBirth = new DateTime(1990, 9, 16),
-                        Claims = new List<Claim> { new Claim { DateOfClaim = new DateTime(2014, 9, 16) }, new Claim { DateOfClaim = new DateTime(2013, 9, 16) } }
+                        DateOfBirth = PolicyStartDate.AddYears(-26),
+                        Claims = new List<Claim> { new Claim { DateOfClaim = PolicyStartDate.AddYears(-2) }, new Claim { DateOfClaim = PolicyStartDate.AddYears(-3) } }
                     },
                 });
 
@@ -126,15 +127,15 @@ namespace Demo.InsuranceCalculation.Tests.Services
         public void PremiumIsIncreasedByTwentyPercentForClaimsWithinOneYearAndTenPercentForWithinTwoToFiveYears()
         {
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+                PolicyStartDate,
                 new List<Driver>
                 {
                     new Driver
                     {
                         Name = "John",
                         Occupation = Occupation.Chauffeur,
-                        DateOfBirth = new DateTime(1990, 9, 16),
-                        Claims = new List<Claim> { new Claim { DateOfClaim = new DateTime(2016, 1, 16) }, new Claim { DateOfClaim = new DateTime(2013, 9, 16) } }
+                        DateOfBirth =PolicyStartDate.AddYears(-26),
+                        Claims = new List<Claim> { new Claim { DateOfClaim = PolicyStartDate.AddMonths(-8) }, new Claim { DateOfClaim = PolicyStartDate.AddYears(-3) } }
                     },
                 });
 
@@ -148,15 +149,15 @@ namespace Demo.InsuranceCalculation.Tests.Services
         public void PremiumIsNotAffectedByClaimsFiveYearsOrMoreBeforeStartOfPolicy()
         {
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+                PolicyStartDate,
                 new List<Driver>
                 {
                     new Driver
                     {
                         Name = "John",
                         Occupation = Occupation.Chauffeur,
-                        DateOfBirth = new DateTime(1990, 9, 16),
-                        Claims = new List<Claim> { new Claim { DateOfClaim = new DateTime(2011, 9, 16) }, new Claim { DateOfClaim = new DateTime(2010, 9, 16) } }
+                        DateOfBirth = PolicyStartDate.AddYears(-26),
+                        Claims = new List<Claim> { new Claim { DateOfClaim = PolicyStartDate.AddYears(-5), }, new Claim { DateOfClaim = PolicyStartDate.AddYears(-6) } }
                     },
                 });
 
@@ -181,14 +182,14 @@ namespace Demo.InsuranceCalculation.Tests.Services
         {
             var service = CreateService();
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+                PolicyStartDate,
                 new List<Driver>
                 {
                     new Driver
                     {
                         Name = "John",
                         Occupation = Occupation.Chauffeur,
-                        DateOfBirth = new DateTime(1990, 9, 16)
+                        DateOfBirth = PolicyStartDate.AddYears(-26)
                     },
                 });
 
@@ -203,15 +204,15 @@ namespace Demo.InsuranceCalculation.Tests.Services
         {
             var service = CreateService();
             InsurancePolicy policy = new InsurancePolicy(
-                new DateTime(2016, 9, 16),
+                PolicyStartDate,
                 new List<Driver>
                 {
                     new Driver
                     {
                         Name = "John",
                         Occupation = Occupation.Chauffeur,
-                        DateOfBirth = new DateTime(1990, 9, 16),
-                        Claims = new List<Claim> { new Claim { DateOfClaim = new DateTime(2016, 1, 16) }, new Claim { DateOfClaim = new DateTime(2015, 10, 16) } }
+                        DateOfBirth = PolicyStartDate.AddYears(-26),
+                        Claims = new List<Claim> { new Claim { DateOfClaim = PolicyStartDate.AddMonths(-8) }, new Claim { DateOfClaim = PolicyStartDate.AddMonths(-10) } }
                     },
                 });
 

@@ -3,8 +3,8 @@
 namespace Demo.InsuranceCalculation.PremiumCalculation
 {
     /// <summary>
-    /// Defines the behaviour of a policy pattern that represents a rule for 
-    /// calculates insurance premium.
+    /// Defines the behaviour of a class that represents a rule for 
+    /// calculating insurance premium.
     /// </summary>
     public interface IPremiumCalculationRule
     {
