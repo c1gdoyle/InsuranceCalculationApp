@@ -49,6 +49,8 @@
     <Compile Include="Base\NotifierBase.cs" />
     <Compile Include="Base\ViewControllerBase.cs" />
     <Compile Include="Behaviours\ViewControllerBehaviour.cs" />
+    <Compile Include="Dialog\DialogService.cs" />
+    <Compile Include="Dialog\IDialogService.cs" />
     <Compile Include="Events\WindowShouldCloseEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
