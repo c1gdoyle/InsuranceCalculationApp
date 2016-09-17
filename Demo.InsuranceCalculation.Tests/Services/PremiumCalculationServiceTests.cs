@@ -179,19 +179,46 @@ namespace Demo.InsuranceCalculation.Tests.Services
         [TestMethod]
         public void PremimumCalculationServiceAppliesOccupationRuleThenAgeRule()
         {
+            var service = CreateService();
+            InsurancePolicy policy = new InsurancePolicy(
+                new DateTime(2016, 9, 16),
+                new List<Driver>
+                {
+                    new Driver
+                    {
+                        Name = "John",
+                        Occupation = Occupation.Chauffeur,
+                        DateOfBirth = new DateTime(1990, 9, 16)
+                    },
+                });
 
-        }
+            decimal finalPremium = service.CalculatePremium(policy);
+            decimal expectedPremium = (StartingPremium * 1.1m) * 0.9m;
 
-        [TestMethod]
-        public void PremimumCalculationServiceAppliesOccupationRuleThenClaimsRule()
-        {
-
+            Assert.AreEqual(expectedPremium, finalPremium);
         }
 
         [TestMethod]
         public void PremimumCalculationServiceAppliesOccupationRuleThenAgeRuleThenClaimsRule()
         {
+            var service = CreateService();
+            InsurancePolicy policy = new InsurancePolicy(
+                new DateTime(2016, 9, 16),
+                new List<Driver>
+                {
+                    new Driver
+                    {
+                        Name = "John",
+                        Occupation = Occupation.Chauffeur,
+                        DateOfBirth = new DateTime(1990, 9, 16),
+                        Claims = new List<Claim> { new Claim { DateOfClaim = new DateTime(2016, 1, 16) }, new Claim { DateOfClaim = new DateTime(2015, 10, 16) } }
+                    },
+                });
 
+            decimal finalPremium = service.CalculatePremium(policy);
+            decimal expectedPremium = (((StartingPremium * 1.1m) * 0.9m) * 1.2m )* 1.2m;
+
+            Assert.AreEqual(expectedPremium, finalPremium);
         }
 
         private IPremiumCalculationService CreateService()

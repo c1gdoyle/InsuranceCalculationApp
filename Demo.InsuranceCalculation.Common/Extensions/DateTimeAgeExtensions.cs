@@ -25,11 +25,14 @@ namespace Demo.InsuranceCalculation.Extensions
         /// <returns>The age in years.</returns>
         public static int GetAgeAtDate(this DateTime dateOfBirth, DateTime targetDate)
         {
-            //(yyyyMMdd - yyyyMMdd) / 10000
-            var a = (targetDate.Year * 100 + targetDate.Month) * 100 + targetDate.Day;
-            var b = (dateOfBirth.Year * 100 + dateOfBirth.Month) * 100 + dateOfBirth.Day;
+            int age = targetDate.Year - dateOfBirth.Year;
 
-            return (a - b) / 10000;
+            if(dateOfBirth > targetDate.AddYears(-age))
+            {
+                age--;
+            }
+
+            return age;
         }
     }
 }

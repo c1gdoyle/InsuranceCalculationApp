@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Demo.InsuranceCalculation.Data;
 using Demo.InsuranceCalculation.PremiumCalculation;
 
@@ -38,7 +35,7 @@ namespace Demo.InsuranceCalculation.Services
         {
             decimal premium = StartingPremium;
 
-            foreach(var rule in _rulesByPrecedence.Values)
+            foreach(var rule in _rulesByPrecedence.Values.OrderBy(p => p.OrderOfPrecedence))
             {
                 premium = rule.CalculatePremium(policy, premium);
             }
