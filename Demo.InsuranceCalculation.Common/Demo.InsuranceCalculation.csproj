@@ -59,6 +59,8 @@
     <Compile Include="PremiumCalculation\DriverOccupationPremiumCalculationRule.cs" />
     <Compile Include="PremiumCalculation\IPremiumCalculationRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IInsurancePolicyAssessmentService.cs" />
+    <Compile Include="Services\InsurancePolicyAssessmentSerivce.cs" />
     <Compile Include="Services\IPolicyDeclinationService.cs" />
     <Compile Include="Services\IPremiumCalculationService.cs" />
     <Compile Include="Services\PolicyDeclinationService.cs" />

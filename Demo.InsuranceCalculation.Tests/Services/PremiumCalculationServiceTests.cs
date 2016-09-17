@@ -15,7 +15,7 @@ namespace Demo.InsuranceCalculation.Tests.Services
         private readonly DateTime PolicyStartDate = DateTime.Today.AddDays(1);
 
         [TestMethod]
-        public void PremiumIsIncreasedByTenPercentIfThereIsADriverWhoIsAnAccountant()
+        public void PremiumIsIncreasedByTenPercentIfThereIsADriverWhoIsAChauffeur()
         {
             InsurancePolicy policy = new InsurancePolicy(
                 PolicyStartDate,
