@@ -9,9 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Presentation", "Demo.P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InsuranceCalculation", "Demo.InsuranceCalculation.Common\Demo.InsuranceCalculation.csproj", "{A6E49CDF-2314-45F9-B55D-4B8A80FA3ED1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7F09DE49-1BDF-414E-AC68-2E2CC7E39D94}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7F09DE49-1BDF-414E-AC68-2E2CC7E39D94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InsuranceCalculation.Tests", "Demo.InsuranceCalculation.Tests\Demo.InsuranceCalculation.Tests.csproj", "{3F936DD4-540C-4D7D-80A0-30AB0193D26A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{67B4FC79-11F2-4F5A-BB81-772F81D99118}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{0AE22329-D43A-44D4-BE22-DF3C02A47019} = {67B4FC79-11F2-4F5A-BB81-772F81D99118}
 		{3F936DD4-540C-4D7D-80A0-30AB0193D26A} = {7F09DE49-1BDF-414E-AC68-2E2CC7E39D94}
 	EndGlobalSection
 EndGlobal

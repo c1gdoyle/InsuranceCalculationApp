@@ -48,12 +48,20 @@
     <Compile Include="Data\InsurancePolicy.cs" />
     <Compile Include="Data\Occupation.cs" />
     <Compile Include="Extensions\DateTimeAgeExtensions.cs" />
+    <Compile Include="PolicyDeclination\IndividualDriverClaimsPolicyDeclinationRule.cs" />
+    <Compile Include="PolicyDeclination\IPolicyDeclinationRule.cs" />
+    <Compile Include="PolicyDeclination\OldestDriverAgePolicyDeclinationRule.cs" />
+    <Compile Include="PolicyDeclination\StartDatePolicyDeclinationRule.cs" />
+    <Compile Include="PolicyDeclination\TotalClaimsPolicyDeclinationRule.cs" />
+    <Compile Include="PolicyDeclination\YoungestDriverAgePolicyDeclinationRule.cs" />
     <Compile Include="PremiumCalculation\DriverAgePremiumCalculationRule.cs" />
     <Compile Include="PremiumCalculation\DriverClaimsPremiumCalculationRule.cs" />
     <Compile Include="PremiumCalculation\DriverOccupationPremiumCalculationRule.cs" />
     <Compile Include="PremiumCalculation\IPremiumCalculationRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IPolicyDeclinationService.cs" />
     <Compile Include="Services\IPremiumCalculationService.cs" />
+    <Compile Include="Services\PolicyDeclinationService.cs" />
     <Compile Include="Services\PremiumCalculationService.cs" />
     <Compile Include="Utilities\InsurancePolicyApplicationResult.cs" />
   </ItemGroup>
