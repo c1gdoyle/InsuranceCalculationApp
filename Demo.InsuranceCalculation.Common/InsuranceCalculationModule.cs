@@ -1,18 +1,22 @@
 ﻿using Demo.InsuranceCalculation.PolicyDeclination;
 using Demo.InsuranceCalculation.PremiumCalculation;
 using Demo.InsuranceCalculation.Services;
+using Demo.InsuranceCalculation.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
+using Prism.Regions;
 
 namespace Demo.InsuranceCalculation
 {
     public class InsuranceCalculationModule : IModule
     {
         private readonly IUnityContainer _container;
+        private readonly IRegionManager _regionManager;
 
-        public InsuranceCalculationModule(IUnityContainer container)
+        public InsuranceCalculationModule(IUnityContainer container, IRegionManager regionManager)
         {
             _container = container;
+            _regionManager = regionManager;
         }
 
         public void Initialize()
@@ -35,6 +39,8 @@ namespace Demo.InsuranceCalculation
 
             _container.RegisterType<IInsurancePolicyAssessmentService, InsurancePolicyAssessmentSerivce>(new ContainerControlledLifetimeManager());
             var assessmentService = _container.Resolve<IInsurancePolicyAssessmentService>();
+
+            _regionManager.RegisterViewWithRegion("MainRegion", typeof(InsuranceCalculationView));
         }
     }
 }

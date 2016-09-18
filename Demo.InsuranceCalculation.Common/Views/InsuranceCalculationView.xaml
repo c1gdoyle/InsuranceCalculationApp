@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="Demo.InsuranceCalculation.Views.InsuranceCalculationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Demo.InsuranceCalculation.Views"
+             xmlns:dP="clr-namespace:Demo.Presentation.Behaviours;assembly=Demo.Presentation"
+             dP:ViewControllerBehaviour.Controller="{Binding}"
+             mc:Ignorable="d">
+    <Grid Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <!-- Driver and Claims-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <!--Driver details-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Driver Name :"
+                           Padding="5"
+                           FontFamily="Segoe UI"
+                           FontSize="12"/>
+                <TextBlock Grid.Row="1"
+                           Text="Occupation :"
+                           Padding="5"
+                           FontFamily="Segoe UI"
+                           FontSize="12"/>
+                <TextBlock Grid.Row="2"
+                           Text="Date Of Birth :"
+                           Padding="5"
+                           FontFamily="Segoe UI"
+                           FontSize="12"/>
+                <TextBox Grid.Column="2"
+                         Text="{Binding Path=DriverName}" 
+                         Padding="5"/>
+                <ComboBox Grid.Column="2"
+                          Grid.Row="1"
+                          ItemsSource="{Binding Path=Occupations}" 
+                          SelectedItem="{Binding Path=SelectedOccupation}"
+                          IsSynchronizedWithCurrentItem="True"/>
+                <DatePicker Grid.Column="2"
+                            Grid.Row="2"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center" 
+                            SelectedDateFormat="Long"
+                            SelectedDate="{Binding DateOfBirth, Mode=TwoWay}" />
+
+                <DockPanel Grid.Column="2"
+                           Grid.Row="3"
+                           HorizontalAlignment="Center" >
+                    <DockPanel.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="5,0,5,0"/>
+                        </Style>
+                    </DockPanel.Resources>
+                    <Button Content="Add Driver"
+                            Command="{Binding Path=AddDriverCommand}">
+                    </Button>
+                    <Button Content="Clear Driver"
+                            Command="{Binding Path=ClearDriverDetailsCommand}" />
+                </DockPanel>
+            </Grid>
+            <!--Drivers data grid-->
+            <StackPanel Grid.Column="2">
+                <Label Content="Drivers"
+                       Padding="5"
+                       FontFamily="Segoe UI"
+                       FontWeight="Bold"
+                       FontSize="12"/>
+                <DataGrid ItemsSource="{Binding Path=Drivers}"
+                          AutoGenerateColumns="False"
+                          Padding="5"
+                          SelectedItem="{Binding Path=SelectedDriver}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Driver Name"/>
+                        <DataGridTextColumn Binding="{Binding Occupation}" Header="Occupation"/>
+                        <DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Date of Birth"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+            
+            <!--Selected Driver's claims grid-->
+            <StackPanel Grid.Row="2"
+                        Grid.Column="2">
+                <Label Grid.Row="3"
+                       Content="Selected Driver's Claims"
+                       Padding="5"
+                       FontFamily="Segoe UI"
+                       FontWeight="Bold"
+                       FontSize="12"/>
+
+                <DataGrid Grid.Row="4"
+                          ItemsSource="{Binding Path=SelectedDriverClaims}"
+                          AutoGenerateColumns="False"
+                          Padding="5"
+                          Width="Auto">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding DateOfClaim}" Header="Date of Claims"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </StackPanel>
+            
+        </Grid>
+        
+        <!-- Submit and Reset Policy panel -->
+        
+        <!-- Exit command panel-->
+      
+    </Grid>
+</UserControl>

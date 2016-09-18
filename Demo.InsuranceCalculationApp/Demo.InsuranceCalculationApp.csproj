@@ -93,10 +93,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewControllers\InsuranceCalculationViewController.cs" />
-    <Compile Include="Views\InsuranceCalculationView.xaml.cs">
-      <DependentUpon>InsuranceCalculationView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootStrapper.cs" />
@@ -142,10 +138,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="InsuranceCalculationAppShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\InsuranceCalculationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

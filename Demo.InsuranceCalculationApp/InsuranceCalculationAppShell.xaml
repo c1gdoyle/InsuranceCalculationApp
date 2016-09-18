@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:local="clr-namespace:Demo.InsuranceCalculationApp"
-        xmlns:views="clr-namespace:Demo.InsuranceCalculationApp.Views"
         mc:Ignorable="d"
         Title="InsuranceCalculationAppShell">
     <Grid>
-        <views:InsuranceCalculationView />
+        <ContentControl prism:RegionManager.RegionName="MainRegion" />
     </Grid>
 </Window>

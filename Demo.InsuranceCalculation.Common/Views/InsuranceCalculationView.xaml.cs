@@ -12,19 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Demo.InsuranceCalculationApp.ViewControllers;
+using Demo.InsuranceCalculation.Services;
+using Demo.InsuranceCalculation.ViewControllers;
+using Microsoft.Practices.Unity;
 
-namespace Demo.InsuranceCalculationApp.Views
+namespace Demo.InsuranceCalculation.Views
 {
     /// <summary>
     /// Interaction logic for InsuranceCalculationView.xaml
     /// </summary>
     public partial class InsuranceCalculationView : UserControl
     {
-        public InsuranceCalculationView()
+        public InsuranceCalculationView(IUnityContainer container)
         {
             InitializeComponent();
-            DataContext = new InsuranceCalculationViewController();
+            DataContext = new InsuranceCalculationViewController(container.Resolve<IInsurancePolicyAssessmentService>());
         }
     }
 }
