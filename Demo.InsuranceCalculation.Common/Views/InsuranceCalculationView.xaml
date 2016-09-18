@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Demo.InsuranceCalculation.Views"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:dP="clr-namespace:Demo.Presentation.Behaviours;assembly=Demo.Presentation"
              dP:ViewControllerBehaviour.Controller="{Binding}"
              mc:Ignorable="d">
@@ -13,7 +14,7 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <!-- Driver and Claims-->
         <Grid>
             <Grid.ColumnDefinitions>
@@ -27,7 +28,7 @@
                 <RowDefinition Height="5" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
+
             <!--Driver details-->
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -93,17 +94,14 @@
                        FontWeight="Bold"
                        FontSize="12"/>
                 <DataGrid ItemsSource="{Binding Path=Drivers}"
-                          AutoGenerateColumns="False"
                           Padding="5"
                           SelectedItem="{Binding Path=SelectedDriver}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Name}" Header="Driver Name"/>
-                        <DataGridTextColumn Binding="{Binding Occupation}" Header="Occupation"/>
-                        <DataGridTextColumn Binding="{Binding DateOfBirth}" Header="Date of Birth"/>
-                    </DataGrid.Columns>
+                    <i:Interaction.Behaviors>
+                        <dP:ColumnHeaderDisplayBehaviour />
+                    </i:Interaction.Behaviors>
                 </DataGrid>
             </StackPanel>
-            
+
             <!--Selected Driver's claims grid-->
             <StackPanel Grid.Row="2"
                         Grid.Column="2">
@@ -116,12 +114,11 @@
 
                 <DataGrid Grid.Row="4"
                           ItemsSource="{Binding Path=SelectedDriverClaims}"
-                          AutoGenerateColumns="False"
                           Padding="5"
                           Width="Auto">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding DateOfClaim}" Header="Date of Claims"/>
-                    </DataGrid.Columns>
+                    <i:Interaction.Behaviors>
+                        <dP:ColumnHeaderDisplayBehaviour />
+                    </i:Interaction.Behaviors>
                 </DataGrid>
 
                 <DockPanel HorizontalAlignment="Stretch">
@@ -140,9 +137,9 @@
                 </DockPanel>
 
             </StackPanel>
-            
+
         </Grid>
-        
+
         <!-- Submit and Reset Policy panel -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Demo.InsuranceCalculation.Data
 {
@@ -10,6 +11,7 @@ namespace Demo.InsuranceCalculation.Data
         /// <summary>
         /// Gets or sets the date the claim was taken out.
         /// </summary>
+        [DisplayName("Date Of Claim")]
         public DateTime DateOfClaim { get; set; }
     }
 }

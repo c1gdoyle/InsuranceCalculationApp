@@ -12,6 +12,7 @@ namespace Demo.InsuranceCalculation.Data
         /// <summary>
         /// Gets or sets the name of this driver.
         /// </summary>
+        [DisplayName("Driver Name")]
         public string Name
         {
             get;
@@ -21,6 +22,7 @@ namespace Demo.InsuranceCalculation.Data
         /// <summary>
         /// Gets or sets the occupation of this driver.
         /// </summary>
+        [DisplayName("Driver Occupation")]
         public Occupation Occupation
         {
             get;
@@ -30,6 +32,7 @@ namespace Demo.InsuranceCalculation.Data
         /// <summary>
         /// Gets or sets the date of birth of this driver.
         /// </summary>
+        [DisplayName("Date Of Birth")]
         public DateTime DateOfBirth
         {
             get;
@@ -39,6 +42,7 @@ namespace Demo.InsuranceCalculation.Data
         /// <summary>
         /// Gets or sets the claims associated with this driver, if any.
         /// </summary>
+        [Browsable(false)]
         public IList<Claim> Claims
         {
             get;

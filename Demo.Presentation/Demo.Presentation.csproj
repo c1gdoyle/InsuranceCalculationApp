@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Base\NotifierBase.cs" />
     <Compile Include="Base\ViewControllerBase.cs" />
+    <Compile Include="Behaviours\ColumnHeaderDisplayBehaviour.cs" />
     <Compile Include="Behaviours\ViewControllerBehaviour.cs" />
     <Compile Include="Commands\NotifiedDelegateCommand.cs" />
     <Compile Include="Dialog\DialogService.cs" />
