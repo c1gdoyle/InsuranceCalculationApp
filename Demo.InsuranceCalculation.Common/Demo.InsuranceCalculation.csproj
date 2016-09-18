@@ -112,6 +112,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Demo.Foundation\Demo.Foundation.csproj">
+      <Project>{d2b4e6e5-8bd3-4a1a-aca4-0e3abfdc4bf8}</Project>
+      <Name>Demo.Foundation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Demo.Presentation\Demo.Presentation.csproj">
       <Project>{0ae22329-d43a-44d4-be22-df3c02a47019}</Project>
       <Name>Demo.Presentation</Name>

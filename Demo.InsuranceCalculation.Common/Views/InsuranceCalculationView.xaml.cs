@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Demo.InsuranceCalculation.Services;
 using Demo.InsuranceCalculation.ViewControllers;
+using Demo.Presentation.Dialog;
 using Microsoft.Practices.Unity;
 
 namespace Demo.InsuranceCalculation.Views
@@ -26,7 +27,7 @@ namespace Demo.InsuranceCalculation.Views
         public InsuranceCalculationView(IUnityContainer container)
         {
             InitializeComponent();
-            DataContext = new InsuranceCalculationViewController(container.Resolve<IInsurancePolicyAssessmentService>());
+            DataContext = new InsuranceCalculationViewController(container.Resolve<IInsurancePolicyAssessmentService>(), container.Resolve<IDialogService>());
         }
     }
 }

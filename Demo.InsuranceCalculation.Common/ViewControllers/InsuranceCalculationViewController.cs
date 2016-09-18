@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Demo.InsuranceCalculation.Data;
 using Demo.InsuranceCalculation.Services;
 using Demo.Presentation.Base;
+using Demo.Presentation.Commands;
+using Demo.Presentation.Dialog;
 using Prism.Commands;
 
 namespace Demo.InsuranceCalculation.ViewControllers
 {
+    /// <summary>
+    /// View controller for Insurance Calculation view.
+    /// </summary>
     public class InsuranceCalculationViewController : ViewControllerBase
     {
         #region Private Members
         private readonly IInsurancePolicyAssessmentService _policyAssessmentService;
+        private readonly IDialogService _dialogSerivce;
 
         private string _driverName;
         private Occupation? _selectedOccupation;
@@ -23,12 +26,16 @@ namespace Demo.InsuranceCalculation.ViewControllers
         private readonly ObservableCollection<Driver> _drivers;
         private Driver _selectedDriver;
 
+        private DateTime? _dateOfClaim;
+
+        private DateTime? _policyStartDate;
         #endregion Private Members
 
-
-        public InsuranceCalculationViewController(IInsurancePolicyAssessmentService policyAssessmentService)
+        public InsuranceCalculationViewController(IInsurancePolicyAssessmentService policyAssessmentService, IDialogService dialogService)
         {
             _policyAssessmentService = policyAssessmentService;
+            _dialogSerivce = dialogService;
+
             _drivers = new ObservableCollection<Driver>();
 
             InitialiseCommands();
@@ -36,8 +43,19 @@ namespace Demo.InsuranceCalculation.ViewControllers
 
         private void InitialiseCommands()
         {
-            AddDriverCommand = new DelegateCommand(() => OnAddDriver(), () => CanAddDriver);
-            ClearDriverDetailsCommand = new DelegateCommand(() => OnClearDriverDetails());
+            // driver commands
+            AddDriverCommand = new NotifiedDelegateCommand(() => OnAddDriverCommand(), () => CanAddDriver);
+            ClearDriverDetailsCommand = new DelegateCommand(() => OnClearDriverDetailsCommand());
+
+            //policy commands
+            SubmitPolicyCommand = new NotifiedDelegateCommand(() => OnSubmitPolicyCommand(), () => CanSubmitPolicy);
+            ResetPolicyCommand = new DelegateCommand(() => OnResetPolicyCommand());
+
+            //claims command
+            AddClaimCommand = new NotifiedDelegateCommand(() => OnAddClaimCommand(), () => CanAddClaim);
+
+            //exit command
+            ExitCommand = new DelegateCommand(() => NotifiyWindowShouldClose(null));
         }
 
         #region Properties
@@ -48,7 +66,7 @@ namespace Demo.InsuranceCalculation.ViewControllers
             {
                 _driverName = value;
                 NotifyPropertyChanged("DriverName");
-                AddDriverCommand.RaiseCanExecuteChanged();
+                NotifyPropertyChanged("CanAddDriver");
             }
         }
 
@@ -64,7 +82,7 @@ namespace Demo.InsuranceCalculation.ViewControllers
             {
                 _selectedOccupation = value;
                 NotifyPropertyChanged("SelectedOccupation");
-                AddDriverCommand.RaiseCanExecuteChanged();
+                NotifyPropertyChanged("CanAddDriver");
             }
         }
 
@@ -75,13 +93,19 @@ namespace Demo.InsuranceCalculation.ViewControllers
             {
                 _dateOfBirth = value;
                 NotifyPropertyChanged("DateOfBirth");
-                AddDriverCommand.RaiseCanExecuteChanged();
+                NotifyPropertyChanged("CanAddDriver");
             }
         }
 
         public bool CanAddDriver
         {
-            get { return !string.IsNullOrEmpty(DriverName) && SelectedOccupation.HasValue && DateOfBirth.HasValue; }
+            get
+            {
+                return !string.IsNullOrEmpty(DriverName) &&
+                    SelectedOccupation.HasValue &&
+                    DateOfBirth.HasValue &&
+                    Drivers.Count < 5;
+            }
         }
 
         public ObservableCollection<Driver> Drivers
@@ -97,17 +121,72 @@ namespace Demo.InsuranceCalculation.ViewControllers
                 _selectedDriver = value;
                 NotifyPropertyChanged("SelectedDriver");
                 NotifyPropertyChanged("SelectedDriverClaims");
+                NotifyPropertyChanged("CanAddClaim");
             }
         }
 
-        public IEnumerable<Claim> SelectedDriverClaims
+        public ObservableCollection<Claim> SelectedDriverClaims
         {
-            get { return SelectedDriver != null ? SelectedDriver.Claims : new List<Claim>(); }
+            get
+            {
+                if(SelectedDriver != null && SelectedDriver.Claims != null)
+                {
+                    return new ObservableCollection<Claim>(SelectedDriver.Claims);
+                }
+                else
+                {
+                    return new ObservableCollection<Claim>();
+                }
+            }
+        }
+
+        public DateTime? DateOfClaim
+        {
+            get { return _dateOfClaim; }
+            set
+            {
+                _dateOfClaim = value;
+                NotifyPropertyChanged("DateOfClaim");
+                NotifyPropertyChanged("CanAddClaim");
+            }
+        }
+
+        public bool CanAddClaim
+        {
+            get
+            {
+                return SelectedDriver != null && 
+                    SelectedDriver.Claims != null && 
+                    SelectedDriver.Claims.Count < 5 &&
+                    DateOfClaim.HasValue;
+            }
+        }
+
+        public DateTime? PolicyStartDate
+        {
+            get { return _policyStartDate; }
+            set
+            {
+                _policyStartDate = value;
+                NotifyPropertyChanged("PolicyStartDate");
+                NotifyPropertyChanged("CanSubmitPolicy");
+            }
+        }
+
+        public bool CanSubmitPolicy
+        {
+            get
+            {
+                return PolicyStartDate.HasValue &&
+                  Drivers != null &&
+                  Drivers.Count >= 1 &&
+                  Drivers.Count <= 5;
+            }
         }
         #endregion
 
         #region Commands
-        public DelegateCommand AddDriverCommand
+        public NotifiedDelegateCommand AddDriverCommand
         {
             get;
             private set;
@@ -118,9 +197,33 @@ namespace Demo.InsuranceCalculation.ViewControllers
             get;
             private set;
         }
+
+        public NotifiedDelegateCommand SubmitPolicyCommand
+        {
+            get;
+            private set;
+        }
+
+        public DelegateCommand ResetPolicyCommand
+        {
+            get;
+            private set;
+        }
+
+        public NotifiedDelegateCommand AddClaimCommand
+        {
+            get;
+            private set;
+        }
+
+        public DelegateCommand ExitCommand
+        {
+            get;
+            private set;
+        }
         #endregion Commands
 
-        private void OnAddDriver()
+        private void OnAddDriverCommand()
         {
             Driver driver = new Driver
             {
@@ -131,15 +234,51 @@ namespace Demo.InsuranceCalculation.ViewControllers
             };
 
             _drivers.Add(driver);
-
-            OnClearDriverDetails();
+            NotifyPropertyChanged("CanAddDriver");                
+            NotifyPropertyChanged("CanSubmitPolicy");
         }
 
-        private void OnClearDriverDetails()
+        private void OnClearDriverDetailsCommand()
         {
             DriverName = null;
             SelectedOccupation = null;
             DateOfBirth = null;
+        }
+
+        private void OnAddClaimCommand()
+        {
+            var claim = new Claim
+            {
+                DateOfClaim = DateOfClaim.Value
+            };
+
+            SelectedDriver.Claims.Add(claim);
+            NotifyPropertyChanged("SelectedDriverClaims");
+            NotifyPropertyChanged("CanAddClaim");
+        }
+
+        private void OnSubmitPolicyCommand()
+        {
+            InsurancePolicy policy = new InsurancePolicy(PolicyStartDate.Value, Drivers);
+
+            var result = _policyAssessmentService.AssessPolicyApplication(policy);
+
+            if(result.IsPolicyApproved)
+            {
+                _dialogSerivce.ShowMessage(string.Format("Insurance Policy approved. Premium : {0}", result.PremiumAmount));
+            }
+            else
+            {
+                _dialogSerivce.ShowMessage(result.Message, result.IsPolicyApproved);
+            }
+        }
+
+        private void OnResetPolicyCommand()
+        {
+            SelectedDriver = null;
+            Drivers.Clear();
+            PolicyStartDate = null;
+            NotifyPropertyChanged("CanAddDriver");
         }
     }
 }

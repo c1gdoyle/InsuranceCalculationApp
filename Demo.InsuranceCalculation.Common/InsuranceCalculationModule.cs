@@ -2,6 +2,7 @@
 using Demo.InsuranceCalculation.PremiumCalculation;
 using Demo.InsuranceCalculation.Services;
 using Demo.InsuranceCalculation.Views;
+using Demo.Presentation.Dialog;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -21,6 +22,8 @@ namespace Demo.InsuranceCalculation
 
         public void Initialize()
         {
+            _container.RegisterType<IDialogService, DialogService>();
+
             // premium calculation rules
             _container.RegisterType<IPremiumCalculationService, PremiumCalculationService>(new ContainerControlledLifetimeManager());
             var premiumCalculationService = _container.Resolve<IPremiumCalculationService>();

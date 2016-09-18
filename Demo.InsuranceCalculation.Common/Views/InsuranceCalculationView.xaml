@@ -10,7 +10,7 @@
     <Grid Background="LightGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
@@ -124,13 +124,60 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
+                <DockPanel HorizontalAlignment="Stretch">
+                    <TextBlock Text="Date of Claim :"
+                               Padding="5"
+                               FontFamily="Segoe UI"
+                               FontSize="12"/>
+                    <DatePicker HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center" 
+                                SelectedDateFormat="Long"
+                                SelectedDate="{Binding DateOfClaim, Mode=TwoWay}" />
+                    <Button Content="Add Claim"
+                            Command="{Binding Path=AddClaimCommand}">
+                    </Button>
+
+                </DockPanel>
+
             </StackPanel>
             
         </Grid>
         
         <!-- Submit and Reset Policy panel -->
-        
-        <!-- Exit command panel-->
-      
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="275"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <DockPanel>
+                <TextBlock Grid.Row="2"
+                           Text="Policy Start Date :"
+                           Padding="5"
+                           FontFamily="Segoe UI"
+                           FontSize="12"/>
+                <DatePicker Grid.Column="2"
+                            VerticalAlignment="Center" 
+                            SelectedDateFormat="Long"
+                            SelectedDate="{Binding PolicyStartDate, Mode=TwoWay}" />
+            </DockPanel>
+            <DockPanel Grid.Column="2"
+                       HorizontalAlignment="Left" >
+                <DockPanel.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="5,0,5,0"/>
+                    </Style>
+                </DockPanel.Resources>
+                <Button Content="Submit Policy"
+                            Command="{Binding Path=SubmitPolicyCommand}">
+                </Button>
+                <Button Content="Reset Policy"
+                            Command="{Binding Path=ResetPolicyCommand}" />
+
+                <Button Content="Exit App"
+                        Command="{Binding Path=ExitCommand}" />
+            </DockPanel>
+        </Grid>
     </Grid>
 </UserControl>
