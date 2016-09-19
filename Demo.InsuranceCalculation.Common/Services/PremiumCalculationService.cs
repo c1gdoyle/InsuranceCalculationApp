@@ -12,14 +12,14 @@ namespace Demo.InsuranceCalculation.Services
     public class PremiumCalculationService : IPremiumCalculationService
     {
         private const decimal StartingPremium = 500;
-        private readonly IDictionary<int, IPremiumCalculationRule> _rulesByPrecedence;
+        private readonly SortedDictionary<int, IPremiumCalculationRule> _rulesByPrecedence;
 
         /// <summary>
         /// Initialises a new default instance of <see cref="PremiumCalculation"/>.
         /// </summary>
         public PremiumCalculationService()
         {
-            _rulesByPrecedence = new Dictionary<int, IPremiumCalculationRule>();
+            _rulesByPrecedence = new SortedDictionary<int, IPremiumCalculationRule>();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Demo.InsuranceCalculation.Services
         {
             decimal premium = StartingPremium;
 
-            foreach(var rule in _rulesByPrecedence.Values.OrderBy(p => p.OrderOfPrecedence))
+            foreach(var rule in _rulesByPrecedence.Values)
             {
                 premium = rule.CalculatePremium(policy, premium);
             }
