@@ -6,7 +6,8 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:local="clr-namespace:Demo.InsuranceCalculationApp"
         mc:Ignorable="d"
-        Title="InsuranceCalculationAppShell">
+        Title="Insurance Calculation Demo"
+        Icon="Resources/Images/calc.ico">
     <Grid>
         <ContentControl prism:RegionManager.RegionName="MainRegion" />
     </Grid>
